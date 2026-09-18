@@ -106,9 +106,15 @@ A new address needs its own activation round.
 
 ### Hiding the address from scrapers
 
-The email sits in the page source in plain text. After activating, FormSubmit
-gives you a random alias for that address; swapping it into both spots above
-keeps the form working and takes the mailbox out of the HTML.
+The address is deliberately **not displayed anywhere on the page** — not in the
+contact panel, not in the post-submit confirmation, not in the send-failure
+notice. The form is the only route in.
+
+It does still sit in the page source in plain text, in the two spots above,
+because FormSubmit addresses its delivery by it. After activating, FormSubmit
+gives you a random alias for that address; swapping the alias into both spots
+keeps the form working and takes the mailbox out of the HTML entirely. That is
+the remaining step if you want it gone from view-source too.
 
 ### Project types
 

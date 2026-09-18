@@ -460,6 +460,9 @@ section{ position:relative; scroll-margin-top:64px; }
 #contactForm{ transition:opacity .38s ease, transform .45s cubic-bezier(.22,.61,.36,1), filter .38s ease; }
 #contactForm.is-leaving{ opacity:0; transform:translateY(-12px) scale(.985); filter:blur(3px); pointer-events:none; }
 
+/* `display:grid` would otherwise beat the hidden attribute and leave the
+   panel holding its full height in the layout while invisible. */
+.form-done[hidden]{ display:none; }
 .form-done{
   display:grid; gap:var(--s2); justify-items:start;
   padding:var(--s4) 0 var(--s2);
@@ -870,7 +873,6 @@ section{ position:relative; scroll-margin-top:64px; }
           <span class="smallcaps smallcaps--gold">Request Sent</span>
           <h3 class="h3" id="formDoneTitle" tabindex="-1">Thanks — we've got it.</h3>
           <p>Your request is with the RAS Development team. We'll get back to you within one business day.</p>
-          <p>Anything urgent in the meantime: <a href="mailto:hello@villavistahomes.com">hello@villavistahomes.com</a>.</p>
         </div>
 
       </div>
@@ -905,10 +907,6 @@ section{ position:relative; scroll-margin-top:64px; }
         </div>
 
         <dl class="points">
-          <div>
-            <dt>Direct</dt>
-            <dd><a href="mailto:hello@villavistahomes.com">hello@villavistahomes.com</a></dd>
-          </div>
           <div>
             <dt>Service area</dt>
             <dd class="areas">Austin &middot; Westlake &amp; Rollingwood &middot; Lake Travis &amp; Bee Cave &middot; Dripping Springs</dd>
@@ -1146,7 +1144,7 @@ section{ position:relative; scroll-margin-top:64px; }
      ========================================================== */
   (function form(){
     var ENDPOINT = 'https://formsubmit.co/ajax/hello@villavistahomes.com';
-    var FALLBACK = "That didn't go through. Please email hello@villavistahomes.com directly and we'll pick it up from there.";
+    var FALLBACK = "That didn't go through. Please try again in a moment.";
 
     var f = document.getElementById('contactForm');
     if (!f) return;
