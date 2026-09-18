@@ -71,15 +71,59 @@ deploys straight from this repository on every push — no manual upload:
 
 ---
 
+## The contact form
+
+Submissions are emailed to **hello@villavistahomes.com** through
+[FormSubmit](https://formsubmit.co), which needs no account and no server —
+useful here, because the site is a static file.
+
+The page posts to FormSubmit's AJAX endpoint with `fetch`, so the visitor never
+leaves: on success the form dissolves and a confirmation — check mark, "we'll get
+back to you within one business day" — eases up in its place. If JavaScript is off,
+the plain `<form action>` still posts and FormSubmit shows its own thank-you
+page.
+
+### One-time activation — required before any mail arrives
+
+FormSubmit will not forward to an address until that address is confirmed.
+
+1. Open the live site and send a test request through the form.
+2. FormSubmit emails **hello@villavistahomes.com** with an activation link.
+   Click it.
+3. Send one more test. That one lands in the inbox, and every one after it.
+
+Until step 2 is done, the page still shows the confirmation but no mail is
+delivered — so do this before pointing anyone at the site.
+
+### Changing the address
+
+It appears twice in `index.html`, and **both have to change together**:
+
+- the `action` on `<form id="contactForm">` — the no-JS fallback
+- `var ENDPOINT` in the form script — the `/ajax/` variant
+
+A new address needs its own activation round.
+
+### Hiding the address from scrapers
+
+The email sits in the page source in plain text. After activating, FormSubmit
+gives you a random alias for that address; swapping it into both spots above
+keeps the form working and takes the mailbox out of the HTML.
+
+### Project types
+
+The dropdown offers Commercial, Residential, Spec Home and Investment
+Partnership. Field
+names are capitalized (`Name`, `Project Type`, …) because FormSubmit prints them
+verbatim as the labels in the email it sends.
+
+---
+
 ## Still outstanding
 
-Two placeholders remain in the file, both marked in square brackets so they are
-impossible to miss on the page:
+One placeholder remains, marked in square brackets so it is impossible to miss
+on the page:
 
-- **`[FORM ENDPOINT]`** — the contact form's `action`. Until it points at a real
-  handler (Formspree, Basin, a GoDaddy PHP script, anything), submitting shows a
-  notice instead of sending. The form is currently the only way to reach RAS
-  from the site, so this is the important one.
 - **`[HERO PHOTOGRAPHY / RENDER]`** — the hero's building is still a hand-drawn
   SVG stand-in, marked in a comment above it. The Approach section now uses the
   real artwork; the hero does not.

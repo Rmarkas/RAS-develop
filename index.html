@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RAS Development — Commercial &amp; Residential Construction, Austin TX</title>
-<meta name="description" content="RAS Development is an Austin, Texas builder working in commercial construction, residential construction, spec homes and development investments.">
+<meta name="description" content="RAS Development is a commercial and residential builder in Austin, Texas: ground-up construction, tenant build-outs, custom homes, spec homes and development partnerships, run end to end by one team.">
 <meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -384,8 +384,16 @@ section{ position:relative; scroll-margin-top:64px; }
   opacity:calc(var(--lumens) * .06);
   will-change:opacity;
 }
-.contact-grid{ position:relative; display:grid; gap:var(--s6); margin-top:var(--s5); max-width:660px; }
+/* Two columns: the form stays on the eye-path down from the heading, the
+   aside fills the right with what actually happens after Send. */
+.contact-grid{
+  position:relative; display:grid; gap:var(--s5);
+  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  align-items:start; margin-top:var(--s5);
+}
 .field{ display:grid; gap:6px; margin-bottom:var(--s4); }
+.field-row{ display:grid; grid-template-columns:1fr 1fr; gap:0 var(--s4); }
+.field label .opt{ color:var(--gold-deep); letter-spacing:.2em; margin-left:.7em; }
 .field label{ font-family:var(--display); text-transform:uppercase; letter-spacing:.24em; font-size:10px; color:var(--text-muted); }
 .field input,.field select,.field textarea{
   width:100%; background:transparent; color:var(--text);
@@ -398,8 +406,84 @@ section{ position:relative; scroll-margin-top:64px; }
 .field select option{ background:#0A0A0A; color:var(--text); }
 .field textarea{ resize:vertical; min-height:96px; }
 .field input:focus,.field select:focus,.field textarea:focus{ border-bottom-color:var(--gold); outline-offset:6px; }
-.form-note{ margin-top:var(--s2); }
-@media (max-width:900px){ .contact-grid{ gap:var(--s5); } }
+.form-note{ margin-top:var(--s2); color:var(--gold-light); }
+.form-note:empty{ display:none; }
+
+/* ---------- the aside ---------- */
+.contact-aside{
+  display:grid; gap:var(--s4); align-content:start;
+  padding-left:var(--s5); border-left:1px solid var(--hair-faint);
+}
+.contact-aside h4{
+  font-family:var(--display); text-transform:uppercase; letter-spacing:.24em;
+  font-size:10px; color:var(--gold);
+}
+.next{ list-style:none; margin:0; padding:0; display:grid; gap:var(--s3); }
+.next li{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:var(--s2); align-items:baseline; }
+.next .n{
+  font-family:var(--display); font-size:11px; letter-spacing:.16em;
+  color:var(--gold-deep); padding-top:2px;
+}
+.next b{
+  display:block; font-family:var(--display); font-weight:300;
+  text-transform:uppercase; letter-spacing:.14em;
+  font-size:13px; color:var(--gold-light);
+}
+.next p{ margin:4px 0 0; font-size:14px; line-height:1.6; color:var(--text-muted); }
+
+.points{ display:grid; gap:var(--s3); margin:0; padding-top:var(--s4); border-top:1px solid var(--hair-faint); }
+.points dt{
+  font-family:var(--display); text-transform:uppercase; letter-spacing:.24em;
+  font-size:10px; color:var(--text-muted); margin-bottom:5px;
+}
+.points dd{ margin:0; font-size:15px; line-height:1.7; }
+.points a{ color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold-deep); }
+.points a:hover{ color:var(--gold-light); border-color:var(--gold); }
+.points .areas{ color:var(--text-muted); font-size:14px; }
+
+@media (max-width:1000px){
+  .contact-grid{ grid-template-columns:minmax(0,1fr); gap:var(--s5); }
+  .contact-aside{
+    padding-left:0; border-left:0;
+    padding-top:var(--s4); border-top:1px solid var(--hair-faint);
+  }
+}
+@media (max-width:560px){
+  .field-row{ grid-template-columns:minmax(0,1fr); gap:0; }
+}
+
+/* ---------- send -> confirmation swap ----------
+   The shell locks its own height for the duration of the swap so the
+   section does not jump while the form leaves and the receipt arrives. */
+.form-shell{ position:relative; }
+.form-shell.is-animating{ overflow:hidden; transition:height .6s cubic-bezier(.22,.61,.36,1); }
+#contactForm{ transition:opacity .38s ease, transform .45s cubic-bezier(.22,.61,.36,1), filter .38s ease; }
+#contactForm.is-leaving{ opacity:0; transform:translateY(-12px) scale(.985); filter:blur(3px); pointer-events:none; }
+
+.form-done{
+  display:grid; gap:var(--s2); justify-items:start;
+  padding:var(--s4) 0 var(--s2);
+  border-top:1px solid var(--hair);
+  opacity:0; transform:translateY(18px);
+}
+.form-done.in{
+  opacity:1; transform:none;
+  transition:opacity .6s ease .05s, transform .7s cubic-bezier(.22,.61,.36,1) .05s;
+}
+.form-done .h3{ outline-offset:8px; }
+.form-done p{ max-width:46ch; margin:0; color:var(--text-muted); }
+.form-done a{ color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold-deep); }
+.form-done a:hover{ color:var(--gold-light); border-color:var(--gold); }
+
+.done-mark{ width:52px; height:52px; margin-bottom:var(--s1); }
+.done-mark circle,.done-mark path{
+  fill:none; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;
+}
+.done-mark circle{ stroke:var(--gold-deep); stroke-dasharray:189; stroke-dashoffset:189; }
+.done-mark path{ stroke:var(--gold); stroke-dasharray:42; stroke-dashoffset:42; }
+.form-done.in .done-mark circle{ animation:markDraw .85s cubic-bezier(.22,.61,.36,1) .15s forwards; }
+.form-done.in .done-mark path{ animation:markDraw .45s cubic-bezier(.22,.61,.36,1) .62s forwards; }
+@keyframes markDraw{ to{ stroke-dashoffset:0; } }
 
 /* ============================================================
    FOOTER
@@ -572,11 +656,11 @@ section{ position:relative; scroll-margin-top:64px; }
       <i aria-hidden="true"></i>
       <span class="smallcaps smallcaps--gold">Commercial &nbsp;|&nbsp; Residential</span>
     </div>
-    <h1 class="display" id="heroTitle">From Drawings<br>To Keys</h1>
-    <p class="lede">A new Austin builder running commercial and residential projects end to end — one team from the first drawing through permitting and construction to the day you take the keys.</p>
+    <h1 class="display" id="heroTitle">One Builder,<br>Start to Finish</h1>
+    <p class="lede">RAS Development builds commercial and residential projects across the Austin area. Preconstruction, permitting and construction stay with one team — one point of contact, one schedule and one budget you can check at any time.</p>
     <div class="hero-actions">
       <a class="btn btn--solid btn--lg" href="#contact">Request a Consultation</a>
-      <a class="link" href="#build">See How We Build</a>
+      <a class="link" href="#build">See Our Approach</a>
     </div>
   </div>
 </section>
@@ -584,33 +668,33 @@ section{ position:relative; scroll-margin-top:64px; }
 
 <section class="band" id="services" aria-labelledby="servicesTitle">
   <div class="wrap">
-    <span class="smallcaps smallcaps--gold">01 — Capabilities</span>
+    <span class="smallcaps smallcaps--gold">01 — Services</span>
     <h2 class="h2 reveal" id="servicesTitle" style="margin-top:var(--s2)">What We Build</h2>
     <div class="services-grid">
       <article class="service reveal">
         <div class="num">01</div>
         <h3 class="h3">Commercial</h3>
-        <p>Ground-up commercial buildings, shell work and tenant build-outs across the Austin market.
-          We run the drawing set, the permit and the trade schedule from first survey to certificate
-          of occupancy.</p>
+        <p>Ground-up buildings, shell construction and tenant build-outs across the Austin
+          market. We carry the plan set, the permit and the subcontractor schedule from site
+          survey to certificate of occupancy.</p>
       </article>
       <article class="service reveal">
         <div class="num">02</div>
         <h3 class="h3">Residential</h3>
-        <p>Custom homes and whole-house renovations built to the detail the architect drew. One point
-          of contact from the first walk of the lot through the final punch list.</p>
+        <p>Custom homes and whole-house remodels, built to the details the architect drew. One
+          point of contact from the first walk of the lot to the final punch list.</p>
       </article>
       <article class="service reveal">
         <div class="num">03</div>
         <h3 class="h3">Spec Homes</h3>
-        <p>Speculative homes we site, design and build ourselves, for the way Austin actually lives.
-          Land, drawings, construction and sale handled under one roof.</p>
+        <p>Homes we site, design and build on our own land, then take to market. Land, plans,
+          construction and sale handled in-house.</p>
       </article>
       <article class="service reveal">
         <div class="num">04</div>
-        <h3 class="h3">Investments</h3>
-        <p>Projects where we put capital in alongside yours rather than simply billing the work.
-          Acquisition, entitlement, construction and exit, structured deal by deal.</p>
+        <h3 class="h3">Investment Partnerships</h3>
+        <p>Projects where we put our own capital in alongside yours instead of simply billing the
+          work. Acquisition, entitlement, construction and exit, structured deal by deal.</p>
       </article>
     </div>
   </div>
@@ -622,15 +706,15 @@ section{ position:relative; scroll-margin-top:64px; }
     <div class="wrap build-head">
       <span class="smallcaps smallcaps--gold">02 — Approach</span>
       <h2 class="h2" id="buildTitle">Drawn, Then Built</h2>
-      <p class="lede muted">Every project starts as a line on a page and ends as a finished building.
-        Scroll to watch one come up out of the drawing.</p>
+      <p class="lede muted">Every project starts as a set of plans and ends as a building somebody
+        uses every day. Scroll to watch one come up out of the drawings.</p>
     </div>
 
     <div class="wrap">
       <div class="plate">
         <img class="shell" src="building.jpg" alt="" aria-hidden="true" decoding="async">
         <img class="lit" src="building.jpg" decoding="async"
-             alt="The RAS Development pavilion at night: a low glass-walled building under a deep cantilevered roof, its interior lit warm.">
+             alt="A completed RAS Development project at night: a low glass-walled building under a deep cantilevered roof, its interior lit warm.">
         <svg class="wireL" viewBox="0 0 1376 470" aria-hidden="true">
   <path d="M78.0 264.7 L170.2 236.8 L262.4 208.9 L354.7 181.0 L446.9 153.2 L539.1 125.3 L631.3 97.4 L723.6 69.6 L815.8 41.7 L908.0 13.5 L990.2 70.3 L1072.4 127.1 L1154.6 183.9 L1236.8 240.7 L1319.0 297.5" style="--len:1367;--o:0.000"/>
   <path d="M78.0 290.4 L170.2 267.9 L262.4 245.4 L354.7 222.9 L446.9 200.4 L539.1 178.0 L631.3 155.5 L723.6 133.0 L815.8 110.5 L908.0 88.0 L990.2 134.8 L1072.4 181.5 L1154.6 228.3 L1236.8 275.1 L1319.0 321.9" style="--len:1327;--o:0.050"/>
@@ -677,9 +761,9 @@ section{ position:relative; scroll-margin-top:64px; }
     </div>
 
     <div class="wrap legend smallcaps">
-      <span style="--a:0">Line</span>
+      <span style="--a:0">Plans</span>
       <span style="--a:.56">Structure</span>
-      <span style="--a:.76">Finished</span>
+      <span style="--a:.76">Finish</span>
     </div>
   </div>
 </section>
@@ -687,7 +771,7 @@ section{ position:relative; scroll-margin-top:64px; }
 <!-- ============ 4. PROCESS — the build sequence ============ -->
 <section class="band" id="process" aria-labelledby="processTitle">
   <div class="wrap">
-    <span class="smallcaps smallcaps--gold">03 — Method</span>
+    <span class="smallcaps smallcaps--gold">03 — Process</span>
     <h2 class="h2 reveal" id="processTitle" style="margin-top:var(--s2)">The Build Sequence</h2>
     <div class="process-body" id="processBody">
       <div class="process-line"><i aria-hidden="true"></i></div>
@@ -695,27 +779,27 @@ section{ position:relative; scroll-margin-top:64px; }
         <li class="step">
           <span class="num">01</span>
           <h3 class="h3">Consultation</h3>
-          <p>We sit down with you to understand the site, the budget and what the finished building has to do.</p>
+          <p>We walk the site with you and get clear on the budget, the timeline and what the finished building has to do.</p>
         </li>
         <li class="step">
           <span class="num">02</span>
           <h3 class="h3">Design &amp; Preconstruction</h3>
-          <p>Drawings, permitting and a line-item budget are settled before a single trade mobilizes.</p>
+          <p>Plans, permits and a line-item budget are settled before any trade mobilizes, so the number you approve is the number we build to.</p>
         </li>
         <li class="step">
           <span class="num">03</span>
-          <h3 class="h3">Groundwork</h3>
-          <p>Site work, foundation and structure go in under a schedule you can see at any time.</p>
+          <h3 class="h3">Site Work &amp; Structure</h3>
+          <p>Grading, utilities, foundation and framing go in against a schedule you can check at any time.</p>
         </li>
         <li class="step">
           <span class="num">04</span>
-          <h3 class="h3">Build &amp; Finish</h3>
-          <p>Trades are sequenced tightly and finishes are installed to the tolerances the drawings call for.</p>
+          <h3 class="h3">Rough-In &amp; Finish-Out</h3>
+          <p>Mechanical, electrical and plumbing rough-in, then inspections and finishes installed to the spec the drawings call for.</p>
         </li>
         <li class="step">
           <span class="num">05</span>
-          <h3 class="h3">Final Walkthrough</h3>
-          <p>We walk the finished building with you, close out the punch list and hand over the keys.</p>
+          <h3 class="h3">Walkthrough &amp; Turnover</h3>
+          <p>We walk the finished building with you, close out the punch list, hand over warranties and close-out documents, and turn over the keys.</p>
         </li>
       </ol>
     </div>
@@ -725,39 +809,112 @@ section{ position:relative; scroll-margin-top:64px; }
 
 <section class="contact" id="contact" aria-labelledby="contactTitle">
   <div class="wrap">
-    <span class="smallcaps smallcaps--gold">04 — Start</span>
+    <span class="smallcaps smallcaps--gold">04 — Get Started</span>
     <h2 class="h2 reveal" id="contactTitle" style="margin-top:var(--s2)">Request a Consultation</h2>
     <div class="contact-grid">
 
-      <!-- action is a placeholder: point it at the real handler / form service -->
-      <form id="contactForm" action="[FORM ENDPOINT]" method="post" novalidate>
-        <div class="field">
-          <label for="f-name">Name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required>
+      <div class="form-shell" id="formShell">
+
+        <!-- Delivery runs through FormSubmit, which forwards to the address in
+             the action below. The `action` here is the no-JS fallback; the
+             script posts to the /ajax/ variant so the page can stay put and
+             show the confirmation. Change the address in BOTH places. -->
+        <form id="contactForm" action="https://formsubmit.co/hello@villavistahomes.com" method="post" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="Name" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="Email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-phone">Phone <span class="opt">Optional</span></label>
+              <input id="f-phone" name="Phone" type="tel" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="f-type">Project type</label>
+              <select id="f-type" name="Project Type" required>
+                <option value="">Select…</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Residential">Residential</option>
+                <option value="Spec Home">Spec Home</option>
+                <option value="Investment Partnership">Investment Partnership</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-message">Message <span class="opt">Optional</span></label>
+            <textarea id="f-message" name="Message" rows="4" placeholder="Site, scope, timeline — whatever you have so far."></textarea>
+          </div>
+
+          <!-- FormSubmit controls -->
+          <input type="hidden" name="_subject" value="New consultation request — rasdevelop.com">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <!-- honeypot: real people never see it, bots fill it in -->
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0">
+
+          <button class="btn btn--solid btn--lg" type="submit">Send Request</button>
+          <p class="form-note smallcaps" id="formNote" role="status"></p>
+        </form>
+
+        <div class="form-done" id="formDone" hidden>
+          <svg class="done-mark" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="30"/>
+            <path d="M19 33.5 L28 42.5 L45.5 22"/>
+          </svg>
+          <span class="smallcaps smallcaps--gold">Request Sent</span>
+          <h3 class="h3" id="formDoneTitle" tabindex="-1">Thanks — we've got it.</h3>
+          <p>Your request is with the RAS Development team. We'll get back to you within one business day.</p>
+          <p>Anything urgent in the meantime: <a href="mailto:hello@villavistahomes.com">hello@villavistahomes.com</a>.</p>
         </div>
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required>
+
+      </div>
+
+
+      <aside class="contact-aside">
+        <div>
+          <h4>What happens next</h4>
+          <ol class="next">
+            <li>
+              <span class="n">01</span>
+              <div>
+                <b>A reply within one business day</b>
+                <p>We come back with first questions and a time to talk.</p>
+              </div>
+            </li>
+            <li>
+              <span class="n">02</span>
+              <div>
+                <b>Consultation</b>
+                <p>We walk the site with you and get clear on the budget, the timeline and what the finished building has to do.</p>
+              </div>
+            </li>
+            <li>
+              <span class="n">03</span>
+              <div>
+                <b>Design &amp; preconstruction</b>
+                <p>Plans, permits and a line-item budget, settled before any trade mobilizes.</p>
+              </div>
+            </li>
+          </ol>
         </div>
-        <div class="field">
-          <label for="f-phone">Phone</label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel">
-        </div>
-        <div class="field">
-          <label for="f-type">Project type</label>
-          <select id="f-type" name="project_type" required>
-            <option value="">Select…</option>
-            <option value="commercial">Commercial</option>
-            <option value="residential">Residential</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="f-message">Message</label>
-          <textarea id="f-message" name="message" rows="4"></textarea>
-        </div>
-        <button class="btn btn--solid btn--lg" type="submit">Send Request</button>
-        <p class="form-note smallcaps" id="formNote" role="status">[FORM ENDPOINT NOT YET CONNECTED]</p>
-      </form>
+
+        <dl class="points">
+          <div>
+            <dt>Direct</dt>
+            <dd><a href="mailto:hello@villavistahomes.com">hello@villavistahomes.com</a></dd>
+          </div>
+          <div>
+            <dt>Service area</dt>
+            <dd class="areas">Austin &middot; Westlake &amp; Rollingwood &middot; Lake Travis &amp; Bee Cave &middot; Dripping Springs</dd>
+          </div>
+        </dl>
+      </aside>
 
 
     </div>
@@ -982,17 +1139,82 @@ section{ position:relative; scroll-margin-top:64px; }
   })();
 
   /* ==========================================================
-     FORM — no endpoint wired yet; keep the page honest
+     FORM — posts to FormSubmit without leaving the page, then
+     dissolves itself and draws the confirmation in its place.
+     ENDPOINT is the only line to change if the service changes;
+     the <form action> is the no-JS fallback and mirrors it.
      ========================================================== */
   (function form(){
+    var ENDPOINT = 'https://formsubmit.co/ajax/hello@villavistahomes.com';
+    var FALLBACK = "That didn't go through. Please email hello@villavistahomes.com directly and we'll pick it up from there.";
+
     var f = document.getElementById('contactForm');
-    var note = document.getElementById('formNote');
     if (!f) return;
+    var shell = document.getElementById('formShell');
+    var done  = document.getElementById('formDone');
+    var note  = document.getElementById('formNote');
+    var btn   = f.querySelector('button[type=submit]');
+    var busy  = false;
+
+    function fail(msg){
+      busy = false;
+      btn.disabled = false;
+      btn.textContent = 'Send Request';
+      note.textContent = msg;
+    }
+
+    /* Lock the shell at the form's height, fade the form out, then let the
+       shell ease down to the confirmation's height as the receipt rises. */
+    function showReceipt(){
+      shell.style.height = shell.offsetHeight + 'px';
+      shell.classList.add('is-animating');
+      void shell.offsetHeight;
+      f.classList.add('is-leaving');
+
+      setTimeout(function(){
+        f.hidden = true;
+        done.hidden = false;
+        shell.style.height = done.offsetHeight + 'px';
+        done.classList.add('in');
+
+        var title = document.getElementById('formDoneTitle');
+        if (title) title.focus({ preventScroll:true });
+
+        setTimeout(function(){
+          shell.classList.remove('is-animating');
+          shell.style.height = '';
+        }, 720);
+      }, reduced ? 20 : 400);
+    }
+
     f.addEventListener('submit', function(e){
-      if (f.getAttribute('action') === '[FORM ENDPOINT]'){
-        e.preventDefault();
-        note.textContent = '[FORM ENDPOINT NOT YET CONNECTED — point the form action at a real handler]';
-      }
+      e.preventDefault();
+      if (busy) return;
+      if (!f.checkValidity()){ f.reportValidity(); return; }
+
+      busy = true;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      note.textContent = '';
+
+      var data = {};
+      new FormData(f).forEach(function(v, k){ data[k] = v; });
+
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json', 'Accept':'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(j){
+          return { ok:r.ok, body:j };
+        });
+      })
+      .then(function(res){
+        if (res.ok && String(res.body.success) === 'true') showReceipt();
+        else fail(res.body.message || FALLBACK);
+      })
+      .catch(function(){ fail(FALLBACK); });
     });
   })();
 
