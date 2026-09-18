@@ -1209,10 +1209,17 @@ section{ position:relative; scroll-margin-top:64px; }
         });
       })
       .then(function(res){
-        if (res.ok && String(res.body.success) === 'true') showReceipt();
-        else fail(res.body.message || FALLBACK);
+        if (res.ok && String(res.body.success) === 'true'){ showReceipt(); return; }
+        /* Never print the service's own reply. It talks about activation
+           links and access keys — our plumbing, not the visitor's problem.
+           The real reason goes to the console for whoever is debugging. */
+        if (window.console && console.error) console.error('[contact form] not delivered:', res.body);
+        fail(FALLBACK);
       })
-      .catch(function(){ fail(FALLBACK); });
+      .catch(function(err){
+        if (window.console && console.error) console.error('[contact form] request failed:', err);
+        fail(FALLBACK);
+      });
     });
   })();
 
